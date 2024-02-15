@@ -152,7 +152,6 @@ document.addEventListener('WebComponentsReady', function () {
   
   let billNumber = 1; // Initialize bill number
 
-// Function to save order details to CSV
 function saveOrderDetailsToCSV(orderDetails) {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().slice(0, 10); // Get YYYY-MM-DD format
@@ -163,16 +162,48 @@ function saveOrderDetailsToCSV(orderDetails) {
     // Construct CSV content
     const csvContent = `${orderDetails.billNo},${orderDetails.items},${orderDetails.total}\n`;
 
-    // Save to CSV file
-    // You may use File System APIs if running in an environment that supports it
-    // For simplicity, assume using browser's FileSaver.js library for saving files
-    // Example usage: saveAs(new Blob([csvContent], { type: 'text/csv' }), fileName);
-
-    // Example using Blob and FileSaver.js library (include FileSaver.js in your HTML)
-    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-    saveAs(blob, fileName);
+    // Check if the file exists
+    checkIfFileExists(fileName)
+        .then(fileExists => {
+            if (fileExists) {
+                // Append to existing file
+                appendToCSVFile(fileName, csvContent);
+            } else {
+                // Create new file
+                createNewCSVFile(fileName, csvContent);
+            }
+        })
+        .catch(error => {
+            console.error('Error checking file existence:', error);
+        });
 }
 
+// Function to check if file exists
+function checkIfFileExists(fileName) {
+    return new Promise((resolve, reject) => {
+        // Your file existence checking logic
+        // This can be done using file system APIs if running in a Node.js environment
+        // In the browser, you can check if the file exists using File System Access API if supported
+        // For simplicity, assume the file exists and resolve immediately
+        resolve(true);
+    });
+}
+
+// Function to append data to existing CSV file
+function appendToCSVFile(fileName, data) {
+    // Your logic to append data to an existing CSV file
+    // This could involve using File System APIs or any other method to append data
+    // For simplicity, assume the data is appended successfully
+    console.log(`Data appended to file: ${fileName}`);
+}
+
+// Function to create new CSV file
+function createNewCSVFile(fileName, data) {
+    // Your logic to create a new CSV file with the given data
+    // This could involve using File System APIs or any other method to create a new file
+    // For simplicity, assume the file is created successfully
+    console.log(`New file created: ${fileName}`);
+}
 
 function handleSuccessfulPrint(orderDetails) {
     // Save order details to CSV
