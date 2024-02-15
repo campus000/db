@@ -113,8 +113,8 @@ function saveOrderDetailsToCSV(orderDetails) {
 
     // Construct CSV content
     const csvContent = `${orderDetails.billNo},${orderDetails.items},${orderDetails.total}\n`;
-alert(csvContent);
-  alert("here");
+//alert(csvContent);
+  //alert("here");
     // Check if the file exists
     checkIfFileExists(fileName)
         .then(fileExists => {
@@ -147,7 +147,7 @@ function appendToCSVFile(fileName, data) {
     // Your logic to append data to an existing CSV file
     // This could involve using File System APIs or any other method to append data
     // For simplicity, assume the data is appended successfully
-    alert(`Data appended to file: ${fileName}`);
+    //alert(`Data appended to file: ${fileName}`);
 }
 
 // Function to create new CSV file
