@@ -148,7 +148,41 @@ document.addEventListener('WebComponentsReady', function () {
             .catch(handleError);
     }
 }
-*/function printReceipt() {
+*/
+  
+  let billNumber = 1; // Initialize bill number
+
+// Function to save order details to CSV
+function saveOrderDetailsToCSV(orderDetails) {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().slice(0, 10); // Get YYYY-MM-DD format
+
+    // File name based on the current date
+    const fileName = `OrderData_${formattedDate}.csv`;
+
+    // Construct CSV content
+    const csvContent = `${orderDetails.billNo},${orderDetails.items},${orderDetails.total}\n`;
+
+    // Save to CSV file
+    // You may use File System APIs if running in an environment that supports it
+    // For simplicity, assume using browser's FileSaver.js library for saving files
+    // Example usage: saveAs(new Blob([csvContent], { type: 'text/csv' }), fileName);
+
+    // Example using Blob and FileSaver.js library (include FileSaver.js in your HTML)
+    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, fileName);
+}
+
+
+function handleSuccessfulPrint(orderDetails) {
+    // Save order details to CSV
+    saveOrderDetailsToCSV(orderDetails);
+
+    // Increment bill number for the next order
+    billNumber++;
+}
+  
+  function printReceipt() {
     const receiptContent = generateReceiptContent(); // Generate the receipt content
 
     // Check the size of the receipt content
@@ -191,8 +225,11 @@ document.addEventListener('WebComponentsReady', function () {
         // Print directly if the content is shorter than 512 characters
         sendTextData(receiptContent)
             .then(() => {
-               // alert("Receipt printing complete.");
-                                             clearAddedItems(); // Clear added items after printing
+handleSuccessfulPrint({
+        billNo: billNumber,
+        items: 'item1, item2', // Example items
+        total: 100 // Example total
+    });                                             clearAddedItems(); // Clear added items after printing
             })
             .catch(error => {
                 // Handle printing errors
