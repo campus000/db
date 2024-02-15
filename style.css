@@ -140,7 +140,11 @@ main {
   .quantity-button:hover {
     background-color: #e0e0e0;
   }
-
+.button {
+        width: 120px; 
+        height:65px;/* Adjust button width for smaller screens */
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
 
     .summary {
         width: 100%; /* Adjusted to full width for tablets */
@@ -151,6 +155,11 @@ main {
 
 /* Tablet Screens (up to 768px) */
 @media screen and (max-width: 768px) {
+    .button {
+        width: 120px; 
+        height:65px;/* Adjust button width for smaller screens */
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
     main {
         flex-direction: column; /* Stack items vertically for tablets */
     }
@@ -240,7 +249,8 @@ main {
 /* Mobile Screens (up to 480px) */
 @media screen and (max-width: 480px) {
     .button {
-        width: 120px; /* Adjust button width for smaller screens */
+        width: 120px; 
+        height:65px;/* Adjust button width for smaller screens */
         font-size: 16px; /* Adjust font size for smaller screens */
     }
 }
