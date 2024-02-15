@@ -153,16 +153,16 @@ document.addEventListener('WebComponentsReady', function () {
   let billNumber = 1; // Initialize bill number
 
 function saveOrderDetailsToCSV(orderDetails) {
-  alert("added to file");
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().slice(0, 10); // Get YYYY-MM-DD format
+     const currentDate = new Date();    
+  const formattedDate = currentDate.toISOString().slice(0, 10); // Get YYYY-MM-DD format
 
     // File name based on the current date
     const fileName = `Order_Data.csv`;
 
     // Construct CSV content
     const csvContent = `${orderDetails.billNo},${orderDetails.items},${orderDetails.total}\n`;
-
+alert(csvContent);
+  alert("here");
     // Check if the file exists
     checkIfFileExists(fileName)
         .then(fileExists => {
@@ -515,7 +515,7 @@ const formattedTime = currentDate.toLocaleTimeString();
 
   content += '        Campus savories         \n';     
   content += '--------------------------------\n';
-content += 'Bill No.: #12345\n';
+content += `Bill No.: #${billNumber}\n';
 content += 'GST No-29ABEPS2937F1ZF\n';
  content += `Time.:  ${formattedTime}\n`;  content += '--------------------------------\n';
 
