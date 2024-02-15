@@ -141,9 +141,7 @@ main {
     background-color: #e0e0e0;
   }
 .button {
-        width: 120px; 
-        height:65px;/* Adjust button width for smaller screens */
-        font-size: 16px; /* Adjust font size for smaller screens */
+         height:65px;/* Adjust button width for smaller screens */        font-size: 16px; /* Adjust font size for smaller screens */
     }
 
     .summary {
@@ -156,9 +154,7 @@ main {
 /* Tablet Screens (up to 768px) */
 @media screen and (max-width: 768px) {
     .button {
-        width: 120px; 
-        height:65px;/* Adjust button width for smaller screens */
-        font-size: 16px; /* Adjust font size for smaller screens */
+          height:65px;/* Adjust button width for smaller screens */        font-size: 16px; /* Adjust font size for smaller screens */
     }
     main {
         flex-direction: column; /* Stack items vertically for tablets */
