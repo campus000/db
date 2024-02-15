@@ -153,11 +153,12 @@ document.addEventListener('WebComponentsReady', function () {
   let billNumber = 1; // Initialize bill number
 
 function saveOrderDetailsToCSV(orderDetails) {
+  alert("added to file");
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().slice(0, 10); // Get YYYY-MM-DD format
 
     // File name based on the current date
-    const fileName = `OrderData_${formattedDate}.csv`;
+    const fileName = `Order_Data.csv`;
 
     // Construct CSV content
     const csvContent = `${orderDetails.billNo},${orderDetails.items},${orderDetails.total}\n`;
@@ -194,7 +195,7 @@ function appendToCSVFile(fileName, data) {
     // Your logic to append data to an existing CSV file
     // This could involve using File System APIs or any other method to append data
     // For simplicity, assume the data is appended successfully
-    console.log(`Data appended to file: ${fileName}`);
+    alert(`Data appended to file: ${fileName}`);
 }
 
 // Function to create new CSV file
@@ -202,7 +203,7 @@ function createNewCSVFile(fileName, data) {
     // Your logic to create a new CSV file with the given data
     // This could involve using File System APIs or any other method to create a new file
     // For simplicity, assume the file is created successfully
-    console.log(`New file created: ${fileName}`);
+     alert(`New file created: ${fileName}`);
 }
 
 function handleSuccessfulPrint(orderDetails) {
