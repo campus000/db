@@ -167,6 +167,10 @@ function handleSuccessfulPrint(orderDetails) {
 }
   
   function printReceipt() {
+
+const order = getOrderDetails();
+alert("here");
+alert(order);
     const receiptContent = generateReceiptContent(); // Generate the receipt content
 
     // Check the size of the receipt content
@@ -268,7 +272,7 @@ function clearAddedItems() {
 }
 const addedItems = {};
 
-async function createButtonsFromCSV() {
+/*async function createButtonsFromCSV() {
   try {
   const timestamp = new Date().getTime(); // This gives you the current timestamp
 
@@ -315,7 +319,7 @@ const response = await fetch(url);
     console.error('Error reading CSV file:', error);
   }
 }
-
+*/
 
 // Function to create clickable buttons
 function createButtons(data) {
@@ -523,7 +527,39 @@ content += '--------------------------------\n';
 
   return content;
 }
- 
 
-// Call the function to create buttons from CSV
-createButtonsFromCSV();
+function getOrderDetails() {
+alert("a");
+    let orderDetails = {
+        items: [],
+        total: 0
+    };
+
+    // Iterate through added items
+    for (const item in addedItems) {
+        const itemName = item.toString(); // Item name
+        const itemQuantity = addedItems[item].quantity; // Item quantity
+        const itemPrice = addedItems[item].price; // Item price
+
+        // Calculate item total price
+        const itemTotal = itemPrice * itemQuantity;
+
+        // Add item details to orderDetails
+        orderDetails.items.push({
+            name: itemName,
+            quantity: itemQuantity,
+            price: itemPrice,
+            total: itemTotal
+        });
+
+        // Add item total price to the order total
+        orderDetails.total += itemTotal;
+    }
+
+    return orderDetails;
+}
+
+// Example usage:
+const order = getOrderDetails();
+console.log(order);
+

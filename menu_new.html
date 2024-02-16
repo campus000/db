@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Menu Item</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h2>Add Menu Item</h2>
+    <form id="menuForm" method="POST" action="save_menu_item.php">
+        <label for="itemName">Item Name:</label>
+        <input type="text" id="itemName" name="itemName" required><br><br>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+        <!-- Hidden input for image URL -->
+        <input type="hidden" id="image" name="image" value="image.jpg">
+
+        <button type="submit">Add Item</button>
+    </form>
+
+    <h2>Menu Items</h2>
+    <ul id="menuList">
+        <!-- Menu items will be listed here -->
+    </ul>
+
+    <script>
+        function addItem() {
+            var itemName = document.getElementById('itemName').value;
+            var price = document.getElementById('price').value;
+            var image = "image.jpg"; // Hardcoded image URL
+
+            // Create a new list item
+            var listItem = document.createElement('li');
+            listItem.innerHTML = `<strong>${itemName}</strong> - $${price}`;
+            
+            // If image URL is provided, add it to the list item
+            if (image) {
+                var img = document.createElement('img');
+                img.src = image;
+                img.alt = itemName;
+                listItem.appendChild(img);
+            }
+
+            // Append the list item to the menu list
+            document.getElementById('menuList').appendChild(listItem);
+
+            // Clear input fields after adding item
+            document.getElementById('itemName').value = '';
+            document.getElementById('price').value = '';
+        }
+    </script>
+</body>
+</html>

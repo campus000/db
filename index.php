@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <!-- Polymer components -->
+    <link rel="import" href="bower_components/paper-progress/paper-progress.html">
+    <link rel="import" href="bower_components/paper-slider/paper-slider.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-card/paper-card.html">
+    <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-container.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-error.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-char-counter.html">
+    <link rel="import" href="bower_components/paper-input/paper-textarea.html">
+
+    <link rel="import" href="bower_components/paper-styles/color.html">
+    <link rel="stylesheet" href="bower_components/paper-styles/demo.css">
+
+    <title>Campus Savouries</title>
+    <link rel="stylesheet" href="style.css">
+    <style is="custom-style">
+      paper-progress {
+        width: 100%;
+      }
+      paper-progress.blue {
+        paper-progress-active-color: var(--paper-light-blue-500);
+        paper-progress-secondary-color: var(--paper-light-blue-100);
+      }
+      paper-slider {
+        width: 100%;
+      }
+      paper-slider.blue {
+        paper-slider-active-color: var(--paper-light-blue-500);
+        paper-slider-knob-color: var(--paper-light-blue-500);
+      }
+      paper-button {
+        display: block;
+        margin-bottom: 2px;
+      }
+      paper-button.colorful {
+        color: #4285f4;
+      }
+      paper-button[raised].colorful {
+        background: #4285f4;
+        color: #fff;
+      }
+      paper-button.blue {
+        color: var(--paper-light-blue-500);
+        paper-button-flat-focus-color: var(--paper-light-blue-50);
+      }
+      body {
+        background-color: var(--paper-grey-50);
+      }
+      #cards {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 400px;
+      }
+      paper-card {
+        margin-bottom: 5px;
+        margin-top: 5px;
+        width: 100%;
+      }
+      paper-card#logo {
+          
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+      }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Campus Savouries</h1>
+</header>
+
+<main>
+    <div class="button-container" id="button-container">
+        <!-- Buttons will be dynamically added here -->
+    </div>
+
+    <div class="added-items-container">
+        <div class="added-items" id="added-items">
+            <h2>Order Summary:</h2>
+            <!-- Added items will be displayed here -->
+        </div>
+      <div id="summary">
+          <div class="summary-row">
+            <span class="summary-label">Price:</span>
+            <span class="summary-value" id="price">0.00</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Tax:</span>
+            <span class="summary-value" id="tax">0.00</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Total:</span>
+            <span class="summary-value" id="total">0.00</span>
+          </div>
+        </div>
+         <div id="cards">
+         <div class="card-content">         
+             <paper-progress id="progress" indeterminate></paper-progress>
+        </div>        <div id="cards">
+          
+      </paper-card>
+      <paper-card id="logo" style="display: none;">
+        <div class="card-content">
+          <image id="image" src="logo-black.png" width="200px"></image>
+        </div>
+      </paper-card>
+
+       
+
+      <paper-card>
+        <div class="card-content">
+          <paper-button id="print" raised class="colorful">Print</paper-button>
+        </div>
+      </paper-card>
+
+      <paper-dialog id="dialog">
+        <h2>Error</h2>
+        <p>Could not connect to bluetooth device!</p>
+      </paper-dialog>
+    </div>
+    </div>
+<script src="script.js"?v=1></script>
+ <script src="BillingScript.js"></script>
+</main>
+<?php
+// Establish database connection
+$servername = "localhost";
+$username = "pas";
+$password = "password";
+$dbname ="hotel_billing_db";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Perform SQL query to retrieve data from your menu table
+$sql = "SELECT Item, Price ,Image FROM menu";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $items = array();
+
+    // Fetch data from the database and store it in an array
+    while($row = $result->fetch_assoc()) {
+        $items[] = $row;
+    }
+
+    // Close database connection
+    $conn->close();
+
+     $items_json = json_encode($items);
+    
+    // Pass the JSON string to JavaScript
+    echo "<script>";
+    echo "var items = $items_json;";
+    echo "console.log('Items JSON:', " . json_encode($items) . ");";
+    echo "createButtons(items);"; // Call JavaScript function to create buttons
+    echo "</script>";
+} else {
+    echo "0 results";
+}
+?>
+
+</body>
+</html>
